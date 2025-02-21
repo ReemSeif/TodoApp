@@ -50,7 +50,7 @@ const HomeScreen = () => {
         <Text>{item.title}</Text>
         
         {Platform.OS === 'ios' ? (
-      <Ionicons name="checkmark-done" size={24} color="red" />
+      <Ionicons name="checkmark-done" size={24} color="Black" />
       ) : (
         <Ionicons name="checkmark-done-circle" size={24} color="black" />
       )}
