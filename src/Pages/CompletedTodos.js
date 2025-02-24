@@ -1,12 +1,20 @@
-import { View, Text } from 'react-native'
+import { View, Text, SafeAreaView } from 'react-native'
 import React from 'react'
 
 const CompletedTodos = () => {
   return (
-    <View>
-      <Text>CompletedTodos</Text>
-    </View>
+    <SafeAreaView>
+<Text>CompletedTodos</Text>
+    </SafeAreaView>
+      
+    
   )
 }
 
+// const styles = StyleSheet.create({
+//   container:{
+//     flex:1,
+//   },
+
+// })
 export default CompletedTodos
