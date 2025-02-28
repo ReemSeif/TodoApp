@@ -6,7 +6,6 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 
 const TodoItem = ({ item, navigate, isComplete, delet }) => {
   return (
-    
     <Pressable style={styles.todoItems} onPress={() => navigate('TodoDetails', item)}>
       <Text style={{ textDecorationLine: item.isDone ? 'line-through' : 'none' }}>
         {item.title}

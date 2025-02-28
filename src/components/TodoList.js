@@ -1,37 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, FlatList, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import TodoItem from './TodoItem';
+import { useSelector } from 'react-redux';
 
-const TodoList = ({ todos, filteredTodos, navigate, isComplete, delet, filterTodos }) => {
+const TodoList = ({ navigate, isComplete, delet, filterTodos }) => {
+  const [activeFilter, setActiveFilter] = useState('all');
+  const filteredTodos = useSelector(state => state.todo.filteredTodos);
+
+  const handleFilter = (type) => {
+    setActiveFilter(type);
+    filterTodos(type);
+  };
+
   return (
     <View style={styles.todoListContainer}>
-      {todos.length > 0 && (
+      {filteredTodos.length > 0 && (
         <>
           <View style={styles.horizontalDivider} />
           <View style={styles.filterContainer}>
             <TouchableOpacity
-              style={[styles.filterBtns, styles.activeFilterBtn]}
-              onPress={() => filterTodos('all')}
+              style={[styles.filterBtns, activeFilter === 'all' && styles.activeFilterBtn]}
+              onPress={() => handleFilter('all')}
             >
-              <Text style={[styles.filterText, styles.activefilterText]}>All</Text>
+              <Text style={[styles.filterText, activeFilter === 'all' && styles.activefilterText]}>All</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={styles.filterBtns}
-              onPress={() => filterTodos('progress')}
+              style={[styles.filterBtns, activeFilter === 'progress' && styles.activeFilterBtn]}
+              onPress={() => handleFilter('progress')}
             >
-              <Text style={styles.filterText}>In progress</Text>
+              <Text style={[styles.filterText, activeFilter === 'progress' && styles.activefilterText]}>In progress</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={styles.filterBtns}
-              onPress={() => filterTodos('done')}
+              style={[styles.filterBtns, activeFilter === 'done' && styles.activeFilterBtn]}
+              onPress={() => handleFilter('done')}
             >
-              <Text style={styles.filterText}>Done</Text>
+              <Text style={[styles.filterText, activeFilter === 'done' && styles.activefilterText]}>Done</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.todoContainer}>
             <FlatList
               data={filteredTodos}
-              keyExtractor={(item) => item.id.toString()}
+              keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
                 <TodoItem
                   item={item}
@@ -51,11 +60,11 @@ const TodoList = ({ todos, filteredTodos, navigate, isComplete, delet, filterTod
 const styles = StyleSheet.create({
   todoListContainer: {
     width: '90%',
-    justifyContent:'center',
-    alignItems:'center',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 10,
   },
-  todoContainer:{
+  todoContainer: {
     width: '90%',
     marginTop: 10,
   },
